@@ -7,8 +7,8 @@
 <title>I miei turni</title>
 </head>
 <body>
-<main>
-<header><p class="eyebrow">CALENDARIO TURNI</p><h1>I miei turni</h1><p id="today"></p></header>
+<div id="setup" class="setup hidden"><div class="setup-card"><p class="eyebrow">CONFIGURAZIONE</p><h1>Quale turno fai questa settimana?</h1><p>Scegli il turno che fai dal lunedì al sabato. La scelta resterà salvata su questo telefono.</p><div class="choices"><button data-shift="1">1° turno</button><button data-shift="2">2° turno</button><button data-shift="3">3° turno</button></div></div></div><main>
+<header><p class="eyebrow">CALENDARIO TURNI</p><h1>I miei turni</h1><p id="today"></p><button id="settings" class="settings">⚙️ Cambia turno di riferimento</button></header>
 <section class="card result">
 <label for="datePicker">Scegli una data</label><input id="datePicker" type="date">
 <div id="shiftBadge" class="badge"></div><h2 id="shiftTitle"></h2><p id="shiftInfo"></p>
