@@ -11,3 +11,7 @@ document.getElementById('prev').onclick=()=>{view.setMonth(view.getMonth()-1);re
 picker.onchange=()=>{let [y,m,d]=picker.value.split('-').map(Number),x=new Date(y,m-1,d);view=new Date(y,m-1,1);show(x)};
 let now=new Date();document.getElementById('today').textContent=now.toLocaleDateString('it-IT',{weekday:'long',day:'numeric',month:'long'});if(!baseShift)setup.classList.remove('hidden');else show(now);
 if('serviceWorker'in navigator)navigator.serviceWorker.register('service-worker.js');
+let layoutTimer;
+function refreshLayout(){clearTimeout(layoutTimer);layoutTimer=setTimeout(()=>{document.documentElement.style.width='100%';document.body.style.width='100%';render()},300)}
+window.addEventListener('orientationchange',refreshLayout);
+window.addEventListener('resize',refreshLayout);
