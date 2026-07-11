@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b1220">
+<link rel="manifest" href="manifest.json"><link rel="stylesheet" href="style.css">
+<title>I miei turni</title>
+</head>
+<body>
+<main>
+<header><p class="eyebrow">CALENDARIO TURNI</p><h1>I miei turni</h1><p id="today"></p></header>
+<section class="card result">
+<label for="datePicker">Scegli una data</label><input id="datePicker" type="date">
+<div id="shiftBadge" class="badge"></div><h2 id="shiftTitle"></h2><p id="shiftInfo"></p>
+</section>
+<section class="card">
+<div class="month-nav"><button id="prev" aria-label="Mese precedente">‹</button><h2 id="monthTitle"></h2><button id="next" aria-label="Mese successivo">›</button></div>
+<div class="weekdays"><span>L</span><span>M</span><span>M</span><span>G</span><span>V</span><span>S</span><span>D</span></div>
+<div id="calendar" class="calendar"></div>
+</section>
+<section class="legend"><span><i class="t1"></i>1°</span><span><i class="t2"></i>2°</span><span><i class="t3"></i>3°</span><span><i class="rest"></i>Riposo</span></section>
+</main><script src="script.js"></script>
+</body></html>
