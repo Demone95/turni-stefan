@@ -73,9 +73,27 @@ picker.addEventListener('change',()=>{
    show(today);
  }
 },true);
+
+function syncTopControls(){
+ const controls=document.getElementById('topControls');
+ const setup=document.getElementById('setup');
+ if(!controls||!setup)return;
+ const setupVisible=!setup.classList.contains('hidden');
+ controls.classList.toggle('hidden-during-setup',setupVisible);
+ const legend=controls.querySelector('.top-legend');
+ if(setupVisible&&legend)legend.removeAttribute('open');
+}
+
 let now=new Date();document.getElementById('today').textContent=now.toLocaleDateString('it-IT',{weekday:'long',day:'numeric',month:'long'});if(!baseShift||!REF)setup.classList.remove('hidden');else show(now);
 if('serviceWorker'in navigator)navigator.serviceWorker.register('service-worker.js');
 let layoutTimer;
 function refreshLayout(){clearTimeout(layoutTimer);layoutTimer=setTimeout(()=>{document.documentElement.style.width='100%';document.body.style.width='100%';render()},300)}
 window.addEventListener('orientationchange',refreshLayout);
 window.addEventListener('resize',refreshLayout);
+
+const setupVisibilityTarget=document.getElementById('setup');
+if(setupVisibilityTarget){
+ new MutationObserver(syncTopControls).observe(setupVisibilityTarget,{attributes:true,attributeFilter:['class']});
+}
+document.addEventListener('click',()=>setTimeout(syncTopControls,0));
+syncTopControls();

@@ -84,3 +84,76 @@ main>.card:first-of-type{padding-top:22px!important;padding-bottom:22px!importan
 main>.card:first-of-type .date-wrap{margin-bottom:18px!important}
 main>.card:first-of-type .big-shift{width:112px!important;height:112px!important;margin:18px auto 10px!important}
 main>.card:first-of-type h2{margin-top:8px!important;margin-bottom:5px!important}
+
+/* Nasconde Legenda e barra com i comandi mentre si sceglie il turno */
+.top-controls.hidden-during-setup{display:none!important}
+
+/* Sezione "Scegli una data" più bassa e compatta */
+main>.card:first-of-type{
+ padding:16px 20px 18px!important;
+ min-height:0!important;
+}
+main>.card:first-of-type>h3,
+main>.card:first-of-type>h2:first-child{
+ font-size:20px!important;
+ line-height:1.15!important;
+ margin:0 0 12px!important;
+}
+main>.card:first-of-type .date-wrap{
+ margin:0 0 12px!important;
+}
+main>.card:first-of-type input[type="date"]{
+ height:52px!important;
+ min-height:52px!important;
+ padding-top:0!important;
+ padding-bottom:0!important;
+ font-size:20px!important;
+ border-radius:15px!important;
+}
+main>.card:first-of-type .big-shift,
+main>.card:first-of-type .shift-badge,
+main>.card:first-of-type .badge{
+ width:92px!important;
+ height:92px!important;
+ min-width:92px!important;
+ min-height:92px!important;
+ margin:14px auto 8px!important;
+ border-radius:27px!important;
+ font-size:38px!important;
+}
+main>.card:first-of-type .shift-name,
+main>.card:first-of-type h2:not(:first-child){
+ font-size:28px!important;
+ line-height:1.1!important;
+ margin:5px 0 3px!important;
+}
+main>.card:first-of-type .full-date,
+main>.card:first-of-type .result-date,
+main>.card:first-of-type p:last-child{
+ font-size:19px!important;
+ line-height:1.2!important;
+ margin:3px 0 0!important;
+}
+
+/* Fallback sui nomi reali usati dalla versione corrente */
+.result-card,.result,.shift-result{
+ padding-top:16px!important;
+ padding-bottom:18px!important;
+ min-height:0!important;
+}
+.result-card h3,.result h3,.shift-result h3{
+ font-size:20px!important;
+ margin:0 0 12px!important;
+}
+.result-card input,.result input,.shift-result input{
+ height:52px!important;
+ min-height:52px!important;
+ font-size:20px!important;
+}
+.result-card .shift-badge,.result .shift-badge,.shift-result .shift-badge,
+.result-card .badge,.result .badge,.shift-result .badge{
+ width:92px!important;
+ height:92px!important;
+ margin:14px auto 8px!important;
+ font-size:38px!important;
+}
