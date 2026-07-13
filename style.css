@@ -200,3 +200,7 @@ main>.card:first-of-type p:last-child{
 }
 .result .badge{margin-bottom:8px!important}
 .result #shiftInfo{margin-top:0!important}
+
+.date-picker-wrap{position:relative;width:100%;height:52px}
+.date-picker-wrap #datePickerText{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:1;font-size:20px;color:#fff;pointer-events:none}
+.date-picker-wrap #datePicker{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;opacity:0!important;z-index:2!important;cursor:pointer!important}
