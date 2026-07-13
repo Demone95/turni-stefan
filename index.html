@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <meta name="theme-color" content="#0b1220">
-<link rel="manifest" href="manifest.json"><link rel="stylesheet" href="style.css?v=42">
+<link rel="manifest" href="manifest.json"><link rel="stylesheet" href="style.css?v=43">
 <title>I miei turni</title>
 </head>
 <body>
@@ -18,7 +18,15 @@
 <div class="weekdays"><span>L</span><span>M</span><span>M</span><span>G</span><span>V</span><span>S</span><span>D</span></div>
 <div id="calendar" class="calendar"></div>
 </section>
-<section class="card extra-card"><h2>Legenda</h2><div class="full-legend"><span><i class="lg1"></i>1° turno</span><span><i class="lg2"></i>2° turno</span><span><i class="lg3"></i>3° turno</span><span><i class="lgr"></i>Riposo</span><span><i class="lgf"></i>Ferie</span><span><i class="lgm"></i>Malattia</span><span><i class="lgp"></i>Permesso</span><span><i class="lgt"></i>Giorno corrente</span></div></section><section class="card extra-card"><div class="stats-title"><h2>Statistiche</h2><select id="statsYear"></select></div><div class="stats-grid"><div><b id="vacCount">0</b><span>Ferie</span></div><div><b id="sickCount">0</b><span>Malattia</span></div><div><b id="permCount">0</b><span>Ore permesso</span></div></div><label class="allowance-label">Ferie disponibili<input id="allowance" type="number" min="0"></label><p id="remaining"></p></section>
+<details class="card extra-card legend-dropdown">
+<summary>Legenda <span class="legend-arrow">⌄</span></summary>
+<div class="full-legend">
+<span><i class="lg1"></i>1° turno</span><span><i class="lgf"></i>Ferie</span>
+<span><i class="lg2"></i>2° turno</span><span><i class="lgm"></i>Malattia</span>
+<span><i class="lg3"></i>3° turno</span><span><i class="lgp"></i>Permesso</span>
+<span><i class="lgr"></i>Riposo</span><span><i class="lgt"></i>Giorno corrente</span>
+</div>
+</details><section class="card extra-card"><div class="stats-title"><h2>Statistiche</h2><select id="statsYear"></select></div><div class="stats-grid"><div><b id="vacCount">0</b><span>Ferie</span></div><div><b id="sickCount">0</b><span>Malattia</span></div><div><b id="permCount">0</b><span>Ore permesso</span></div></div><label class="allowance-label">Ferie disponibili<input id="allowance" type="number" min="0"></label><p id="remaining"></p></section>
 </main><div id="permitHoursModal" class="setup hidden">
   <div class="setup-card">
     <h2>Ore di permesso</h2>
@@ -35,5 +43,5 @@
     </div>
     <button id="closePermitHours" class="settings">Annulla</button>
   </div>
-</div><div id="absenceModal" class="setup hidden"><div class="setup-card"><h2 id="absenceDate"></h2><p id="absencePlanned"></p><div class="choices absence-choices"><button data-absence="ferie">🏖️ Ferie</button><button data-absence="malattia">🤒 Malattia</button><button data-absence="permesso">🟡 Permesso</button><button data-absence="">↩️ Ripristina turno</button></div><button id="closeAbsence" class="settings">Chiudi</button></div></div><script src="script.js?v=42"></script>
+</div><div id="absenceModal" class="setup hidden"><div class="setup-card"><h2 id="absenceDate"></h2><p id="absencePlanned"></p><div class="choices absence-choices"><button data-absence="ferie">🏖️ Ferie</button><button data-absence="malattia">🤒 Malattia</button><button data-absence="permesso">🟡 Permesso</button><button data-absence="">↩️ Ripristina turno</button></div><button id="closeAbsence" class="settings">Chiudi</button></div></div><script src="script.js?v=43"></script>
 </body></html>

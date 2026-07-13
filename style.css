@@ -50,3 +50,10 @@ main{width:100%;max-width:520px;overflow-x:hidden}
 .hours-grid button{margin:0;background:#b39417;color:#fff;border:0;border-radius:13px;padding:15px 8px;font-size:16px;font-weight:700}
 
 #absencePlanned{white-space:pre-line}.day small{line-height:1.15}
+
+.legend-dropdown{padding:0;overflow:hidden}
+.legend-dropdown summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;padding:20px 22px;font-size:28px;font-weight:800;-webkit-tap-highlight-color:transparent}
+.legend-dropdown summary::-webkit-details-marker{display:none}
+.legend-dropdown .legend-arrow{font-size:30px;line-height:1;transition:transform .2s ease}
+.legend-dropdown[open] .legend-arrow{transform:rotate(180deg)}
+.legend-dropdown .full-legend{padding:0 22px 22px}
