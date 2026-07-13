@@ -48,3 +48,5 @@ main{width:100%;max-width:520px;overflow-x:hidden}
 
 .hours-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:18px 0}
 .hours-grid button{margin:0;background:#b39417;color:#fff;border:0;border-radius:13px;padding:15px 8px;font-size:16px;font-weight:700}
+
+#absencePlanned{white-space:pre-line}.day small{line-height:1.15}
