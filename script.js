@@ -9,6 +9,13 @@ document.querySelectorAll('[data-shift]').forEach(b=>b.onclick=()=>{baseShift=Nu
 document.getElementById('settings').onclick=()=>setup.classList.remove('hidden');
 document.getElementById('prev').onclick=()=>{view.setMonth(view.getMonth()-1);render()};document.getElementById('next').onclick=()=>{view.setMonth(view.getMonth()+1);render()};
 picker.onchange=()=>{let [y,m,d]=picker.value.split('-').map(Number),x=new Date(y,m-1,d);view=new Date(y,m-1,1);show(x)};
+function openDay(d,s){selectedDay=iso(d);document.getElementById('modalDate').textContent=d.toLocaleDateString('it-IT',{weekday:'long',day:'numeric',month:'long',year:'numeric'});document.getElementById('modalPlanned').textContent='Turno previsto: '+(s?s+'° turno':'Riposo');document.getElementById('dayModal').classList.remove('hidden')}
+document.querySelectorAll('[data-event]').forEach(b=>b.onclick=()=>{if(b.dataset.event)events[selectedDay]=b.dataset.event;else delete events[selectedDay];localStorage.setItem('shiftEvents',JSON.stringify(events));document.getElementById('dayModal').classList.add('hidden');render();updateStats()});
+document.getElementById('closeModal').onclick=()=>document.getElementById('dayModal').classList.add('hidden');
+let statsYear=document.getElementById('statsYear'),currentYear=new Date().getFullYear();for(let y=currentYear-3;y<=currentYear+3;y++)statsYear.innerHTML+=`<option ${y===currentYear?'selected':''}>${y}</option>`;
+function updateStats(){let y=Number(statsYear.value),c={ferie:0,malattia:0,permesso:0};Object.entries(events).forEach(([k,v])=>{if(Number(k.slice(0,4))===y)c[v]++});document.getElementById('vacCount').textContent=c.ferie;document.getElementById('sickCount').textContent=c.malattia;document.getElementById('permCount').textContent=c.permesso;let a=Number(document.getElementById('allowance').value)||0;document.getElementById('remaining').textContent='Ferie rimanenti: '+Math.max(0,a-c.ferie)}
+statsYear.onchange=updateStats;document.getElementById('allowance').value=localStorage.getItem('shiftAllowance')||0;document.getElementById('allowance').oninput=e=>{localStorage.setItem('shiftAllowance',e.target.value);updateStats()};updateStats();
+
 let now=new Date();document.getElementById('today').textContent=now.toLocaleDateString('it-IT',{weekday:'long',day:'numeric',month:'long'});if(!baseShift||!REF)setup.classList.remove('hidden');else show(now);
 if('serviceWorker'in navigator)navigator.serviceWorker.register('service-worker.js');
 let layoutTimer;
@@ -16,9 +23,3 @@ function refreshLayout(){clearTimeout(layoutTimer);layoutTimer=setTimeout(()=>{d
 window.addEventListener('orientationchange',refreshLayout);
 window.addEventListener('resize',refreshLayout);
 
-function openDay(d,s){selectedDay=iso(d);document.getElementById('modalDate').textContent=d.toLocaleDateString('it-IT',{weekday:'long',day:'numeric',month:'long',year:'numeric'});document.getElementById('modalPlanned').textContent='Turno previsto: '+(s?s+'° turno':'Riposo');document.getElementById('dayModal').classList.remove('hidden')}
-document.querySelectorAll('[data-event]').forEach(b=>b.onclick=()=>{if(b.dataset.event)events[selectedDay]=b.dataset.event;else delete events[selectedDay];localStorage.setItem('shiftEvents',JSON.stringify(events));document.getElementById('dayModal').classList.add('hidden');render();updateStats()});
-document.getElementById('closeModal').onclick=()=>document.getElementById('dayModal').classList.add('hidden');
-let statsYear=document.getElementById('statsYear'),currentYear=new Date().getFullYear();for(let y=currentYear-3;y<=currentYear+3;y++)statsYear.innerHTML+=`<option ${y===currentYear?'selected':''}>${y}</option>`;
-function updateStats(){let y=Number(statsYear.value),c={ferie:0,malattia:0,permesso:0};Object.entries(events).forEach(([k,v])=>{if(Number(k.slice(0,4))===y)c[v]++});document.getElementById('vacCount').textContent=c.ferie;document.getElementById('sickCount').textContent=c.malattia;document.getElementById('permCount').textContent=c.permesso;let a=Number(document.getElementById('allowance').value)||0;document.getElementById('remaining').textContent='Ferie rimanenti: '+Math.max(0,a-c.ferie)}
-statsYear.onchange=updateStats;document.getElementById('allowance').value=localStorage.getItem('shiftAllowance')||0;document.getElementById('allowance').oninput=e=>{localStorage.setItem('shiftAllowance',e.target.value);updateStats()};updateStats();
