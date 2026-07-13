@@ -3,12 +3,25 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <meta name="theme-color" content="#0b1220">
-<link rel="manifest" href="manifest.json"><link rel="stylesheet" href="style.css?v=43">
+<link rel="manifest" href="manifest.json"><link rel="stylesheet" href="style.css?v=44">
 <title>I miei turni</title>
 </head>
 <body>
 <div id="setup" class="setup hidden"><div class="setup-card"><p class="eyebrow">CONFIGURAZIONE</p><h1>Quale turno fai questa settimana?</h1><p>Scegli il turno che fai dal lunedì al sabato. La scelta resterà salvata su questo telefono.</p><div class="choices"><button data-shift="1">1° turno</button><button data-shift="2">2° turno</button><button data-shift="3">3° turno</button></div></div></div><main>
-<header><p class="eyebrow">CALENDARIO TURNI</p><h1>I miei turni</h1><p id="today"></p><button id="settings" class="settings">⚙️ Cambia turno di riferimento</button></header>
+<header><p class="eyebrow">CALENDARIO TURNI</p><h1>I miei turni</h1><p id="today"></p><div class="top-controls">
+<button id="settings" class="settings">⚙️ Cambia turno di riferimento</button>
+<details class="top-legend">
+<summary>Legenda <span>⌄</span></summary>
+<div class="legend-popover">
+<div class="full-legend">
+<span><i class="lg1"></i>1° turno</span><span><i class="lgf"></i>Ferie</span>
+<span><i class="lg2"></i>2° turno</span><span><i class="lgm"></i>Malattia</span>
+<span><i class="lg3"></i>3° turno</span><span><i class="lgp"></i>Permesso</span>
+<span><i class="lgr"></i>Riposo</span><span><i class="lgt"></i>Giorno corrente</span>
+</div>
+</div>
+</details>
+</div></header>
 <section class="card result">
 <label for="datePicker">Scegli una data</label><input id="datePicker" type="date">
 <div id="shiftBadge" class="badge"></div><h2 id="shiftTitle"></h2><p id="shiftInfo"></p>
@@ -18,15 +31,7 @@
 <div class="weekdays"><span>L</span><span>M</span><span>M</span><span>G</span><span>V</span><span>S</span><span>D</span></div>
 <div id="calendar" class="calendar"></div>
 </section>
-<details class="card extra-card legend-dropdown">
-<summary>Legenda <span class="legend-arrow">⌄</span></summary>
-<div class="full-legend">
-<span><i class="lg1"></i>1° turno</span><span><i class="lgf"></i>Ferie</span>
-<span><i class="lg2"></i>2° turno</span><span><i class="lgm"></i>Malattia</span>
-<span><i class="lg3"></i>3° turno</span><span><i class="lgp"></i>Permesso</span>
-<span><i class="lgr"></i>Riposo</span><span><i class="lgt"></i>Giorno corrente</span>
-</div>
-</details><section class="card extra-card"><div class="stats-title"><h2>Statistiche</h2><select id="statsYear"></select></div><div class="stats-grid"><div><b id="vacCount">0</b><span>Ferie</span></div><div><b id="sickCount">0</b><span>Malattia</span></div><div><b id="permCount">0</b><span>Ore permesso</span></div></div><label class="allowance-label">Ferie disponibili<input id="allowance" type="number" min="0"></label><p id="remaining"></p></section>
+<section class="card extra-card"><div class="stats-title"><h2>Statistiche</h2><select id="statsYear"></select></div><div class="stats-grid"><div><b id="vacCount">0</b><span>Ferie</span></div><div><b id="sickCount">0</b><span>Malattia</span></div><div><b id="permCount">0</b><span>Ore permesso</span></div></div><label class="allowance-label">Ferie disponibili<input id="allowance" type="number" min="0"></label><p id="remaining"></p></section>
 </main><div id="permitHoursModal" class="setup hidden">
   <div class="setup-card">
     <h2>Ore di permesso</h2>
@@ -43,5 +48,5 @@
     </div>
     <button id="closePermitHours" class="settings">Annulla</button>
   </div>
-</div><div id="absenceModal" class="setup hidden"><div class="setup-card"><h2 id="absenceDate"></h2><p id="absencePlanned"></p><div class="choices absence-choices"><button data-absence="ferie">🏖️ Ferie</button><button data-absence="malattia">🤒 Malattia</button><button data-absence="permesso">🟡 Permesso</button><button data-absence="">↩️ Ripristina turno</button></div><button id="closeAbsence" class="settings">Chiudi</button></div></div><script src="script.js?v=43"></script>
+</div><div id="absenceModal" class="setup hidden"><div class="setup-card"><h2 id="absenceDate"></h2><p id="absencePlanned"></p><div class="choices absence-choices"><button data-absence="ferie">🏖️ Ferie</button><button data-absence="malattia">🤒 Malattia</button><button data-absence="permesso">🟡 Permesso</button><button data-absence="">↩️ Ripristina turno</button></div><button id="closeAbsence" class="settings">Chiudi</button></div></div><script src="script.js?v=44"></script>
 </body></html>

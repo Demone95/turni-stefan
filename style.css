@@ -57,3 +57,30 @@ main{width:100%;max-width:520px;overflow-x:hidden}
 .legend-dropdown .legend-arrow{font-size:30px;line-height:1;transition:transform .2s ease}
 .legend-dropdown[open] .legend-arrow{transform:rotate(180deg)}
 .legend-dropdown .full-legend{padding:0 22px 22px}
+
+.top-controls{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;position:relative;margin-bottom:16px}
+.top-controls>.settings{width:100%;height:48px;margin:0;padding:0 14px;white-space:nowrap;font-size:14px}
+.top-legend{position:relative;z-index:20}
+.top-legend summary{list-style:none;height:48px;min-width:112px;box-sizing:border-box;display:flex;align-items:center;justify-content:center;gap:7px;padding:0 13px;border:1px solid #405b82;border-radius:14px;background:#172944;color:#c8d3e4;font-size:14px;white-space:nowrap;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.top-legend summary::-webkit-details-marker{display:none}
+.top-legend[open] summary span{transform:rotate(180deg)}
+.top-legend summary span{transition:transform .2s ease}
+.legend-popover{position:absolute;right:0;top:56px;width:min(330px,calc(100vw - 68px));padding:18px;background:#16243b;border:1px solid #405675;border-radius:18px;box-shadow:0 16px 40px rgba(0,0,0,.38)}
+.legend-popover .full-legend{padding:0}
+@media(max-width:390px){
+ .top-controls{gap:7px}
+ .top-controls>.settings{font-size:12px;padding:0 9px}
+ .top-legend summary{min-width:96px;font-size:12px;padding:0 9px}
+}
+/* Riquadro del turno più compatto */
+.result-card,.result,.shift-result{padding-top:22px!important;padding-bottom:22px!important;min-height:0!important}
+.result-card h3,.result h3,.shift-result h3{margin-top:0!important;margin-bottom:14px!important}
+.result-card input,.result input,.shift-result input{min-height:58px!important;height:58px!important}
+.result-card .shift-badge,.result .shift-badge,.shift-result .shift-badge,
+.result-card .badge,.result .badge,.shift-result .badge{width:112px!important;height:112px!important;margin-top:20px!important;margin-bottom:12px!important}
+.result-card .shift-name,.result .shift-name,.shift-result .shift-name{margin-top:8px!important;margin-bottom:5px!important}
+
+main>.card:first-of-type{padding-top:22px!important;padding-bottom:22px!important}
+main>.card:first-of-type .date-wrap{margin-bottom:18px!important}
+main>.card:first-of-type .big-shift{width:112px!important;height:112px!important;margin:18px auto 10px!important}
+main>.card:first-of-type h2{margin-top:8px!important;margin-bottom:5px!important}
