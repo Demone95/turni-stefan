@@ -3,7 +3,7 @@ const cycle=[3,2,1];let baseShift=Number(localStorage.getItem('baseShift'))||0;l
 const picker=document.getElementById('datePicker'),cal=document.getElementById('calendar'),setup=document.getElementById('setup');let view=new Date();view.setDate(1);
 const pad=n=>String(n).padStart(2,'0'),iso=d=>`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
 function monday(d){let x=new Date(d.getFullYear(),d.getMonth(),d.getDate()),q=x.getDay();x.setDate(x.getDate()-(q===0?6:q-1));return x}
-function shift(d){if(d.getDay()===0)return 0;let w=Math.round((monday(d)-REF)/604800000),idx=cycle.indexOf(baseShift);return cycle[((idx+w)%3+3)%3]}
+function shift(d){if(d.getDay()===0||d.getDay()===6)return 0;let w=Math.round((monday(d)-REF)/604800000),idx=cycle.indexOf(baseShift);return cycle[((idx+w)%3+3)%3]}
 function updateDatePickerText(d){
  const el=document.getElementById('datePickerText');
  if(el&&d instanceof Date&&!Number.isNaN(d.getTime()))el.textContent=d.toLocaleDateString('it-IT',{day:'numeric',month:'short',year:'numeric'}).replace('.','');
