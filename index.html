@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <meta name="theme-color" content="#0b1220">
-<link rel="manifest" href="manifest.json"><link rel="stylesheet" href="style.css?v=51">
+<link rel="manifest" href="manifest.json"><link rel="stylesheet" href="style.css?v=52">
 <title>I miei turni</title>
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=50">
 </head>
@@ -21,11 +21,28 @@
     <button id="authToggle" class="settings">Non hai un account? Registrati</button>
   </div>
 </div>
+<div id="pendingScreen" class="setup hidden">
+  <div class="setup-card">
+    <p class="eyebrow">ACCESSO</p>
+    <h1>Richiesta in attesa</h1>
+    <p>Il tuo account è stato creato ma deve ancora essere approvato. Riprova più tardi.</p>
+    <button id="logoutBtnPending" class="settings">🚪 Esci</button>
+  </div>
+</div>
+<div id="rejectedScreen" class="setup hidden">
+  <div class="setup-card">
+    <p class="eyebrow">ACCESSO</p>
+    <h1>Richiesta non approvata</h1>
+    <p>Il tuo account non è stato approvato. Contatta chi gestisce l'app.</p>
+    <button id="logoutBtnRejected" class="settings">🚪 Esci</button>
+  </div>
+</div>
 <div id="appRoot" class="hidden">
 <div id="setup" class="setup hidden"><div class="setup-card"><p class="eyebrow">CONFIGURAZIONE</p><h1>Quale turno fai questa settimana?</h1><p>Scegli il turno che fai dal lunedì al sabato. La scelta resterà salvata su questo telefono.</p><div class="choices"><button data-shift="1">1° turno</button><button data-shift="2">2° turno</button><button data-shift="3">3° turno</button></div></div></div><main>
 <header><p class="eyebrow">CALENDARIO TURNI</p><h1>I miei turni</h1><p id="today"></p><div class="top-controls" id="topControls">
 <button id="settings" class="settings">⚙️ Cambia turno di riferimento</button>
 <button id="logoutBtn" class="settings logout-btn">🚪 Esci</button>
+<button id="adminBtn" class="settings hidden">🗂️ Richieste</button>
 <details class="top-legend">
 <summary>Legenda <span>⌄</span></summary>
 <div class="legend-popover">
@@ -64,7 +81,13 @@
     </div>
     <button id="closePermitHours" class="settings">Annulla</button>
   </div>
-</div><div id="absenceModal" class="setup hidden"><div class="setup-card"><h2 id="absenceDate"></h2><p id="absencePlanned"></p><div class="choices absence-choices"><button data-absence="ferie">🏖️ Ferie</button><button data-absence="malattia">🤒 Malattia</button><button data-absence="permesso">🟡 Permesso</button><button data-absence="">↩️ Ripristina turno</button></div><button id="closeAbsence" class="settings">Chiudi</button></div></div>
+</div><div id="absenceModal" class="setup hidden"><div class="setup-card"><h2 id="absenceDate"></h2><p id="absencePlanned"></p><div class="choices absence-choices"><button data-absence="ferie">🏖️ Ferie</button><button data-absence="malattia">🤒 Malattia</button><button data-absence="permesso">🟡 Permesso</button><button data-absence="">↩️ Ripristina turno</button></div><button id="closeAbsence" class="settings">Chiudi</button></div></div><div id="adminModal" class="setup hidden">
+  <div class="setup-card">
+    <h2>Richieste in attesa</h2>
+    <div id="pendingList" class="pending-list"><p class="empty-pending">Nessuna richiesta in sospeso.</p></div>
+    <button id="closeAdmin" class="settings">Chiudi</button>
+  </div>
+</div>
 </div><script type="module" src="auth.js"></script>
-<script type="module" src="script.js?v=51"></script>
+<script type="module" src="script.js?v=52"></script>
 </body></html>

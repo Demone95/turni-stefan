@@ -1,5 +1,9 @@
 import { db } from "./firebase-config.js";
-import { doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { doc, getDoc, setDoc, updateDoc, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+// ⚠️ Sostituisci questo valore con il TUO uid Firebase (Authentication → Users → colonna "User UID").
+// Solo l'account con questo uid vedrà il pulsante "Richieste" e potrà approvare/rifiutare nuovi utenti.
+const ADMIN_UID = "TykPl2nG7ma7qrC4HRgpzEUIFXG3";
 
 let absenceData={},selectedAbsenceDate='';
 const cycle=[3,2,1];let baseShift=0;let REF=null;
@@ -103,6 +107,44 @@ function syncTopControls(){
 let now=new Date();document.getElementById('today').textContent=now.toLocaleDateString('it-IT',{weekday:'long',day:'numeric',month:'long'});
 if('serviceWorker'in navigator)navigator.serviceWorker.register('service-worker.js');
 
+const pendingScreen=document.getElementById('pendingScreen'),rejectedScreen=document.getElementById('rejectedScreen'),mainEl=document.querySelector('main');
+const adminBtn=document.getElementById('adminBtn'),adminModal=document.getElementById('adminModal'),pendingList=document.getElementById('pendingList'),closeAdmin=document.getElementById('closeAdmin');
+
+function setGate(kind){
+ pendingScreen.classList.toggle('hidden',kind!=='pending');
+ rejectedScreen.classList.toggle('hidden',kind!=='rejected');
+ mainEl.classList.toggle('hidden',kind!=='approved');
+}
+
+function adminCheck(){
+ adminBtn.classList.toggle('hidden',currentUid!==ADMIN_UID);
+}
+
+adminBtn.onclick=()=>openAdminPanel();
+closeAdmin.addEventListener('click',()=>adminModal.classList.add('hidden'));
+
+async function openAdminPanel(){
+ adminModal.classList.remove('hidden');
+ pendingList.innerHTML='<p>Caricamento…</p>';
+ try{
+   const q=query(collection(db,'users'),where('status','==','pending'));
+   const snap=await getDocs(q);
+   if(snap.empty){pendingList.innerHTML='<p class="empty-pending">Nessuna richiesta in sospeso.</p>';return}
+   pendingList.innerHTML='';
+   snap.forEach(docSnap=>{
+     const u=docSnap.data();
+     const row=document.createElement('div');row.className='pending-row';
+     const name=document.createElement('span');name.textContent=u.username||docSnap.id;
+     const approveBtn=document.createElement('button');approveBtn.textContent='✅ Approva';approveBtn.className='approve-btn';
+     const rejectBtn=document.createElement('button');rejectBtn.textContent='❌ Rifiuta';rejectBtn.className='reject-btn';
+     approveBtn.onclick=async()=>{await updateDoc(doc(db,'users',docSnap.id),{status:'approved'});openAdminPanel()};
+     rejectBtn.onclick=async()=>{await updateDoc(doc(db,'users',docSnap.id),{status:'rejected'});openAdminPanel()};
+     row.append(name,approveBtn,rejectBtn);
+     pendingList.append(row);
+   });
+ }catch(err){console.error('Errore caricamento richieste',err);pendingList.innerHTML='<p class="empty-pending">Errore nel caricamento.</p>'}
+}
+
 async function loadUserData(){
  dataReady=false;
  let data={};
@@ -110,6 +152,13 @@ async function loadUserData(){
    const snap=await getDoc(userDocRef());
    if(snap.exists())data=snap.data();
  }catch(err){console.error('Errore caricamento dati',err)}
+
+ adminCheck();
+ const status=data.status||'pending';
+ if(currentUid!==ADMIN_UID&&status==='pending'){setGate('pending');return}
+ if(currentUid!==ADMIN_UID&&status==='rejected'){setGate('rejected');return}
+ setGate('approved');
+
  baseShift=Number(data.baseShift)||0;
  REF=data.referenceMonday?new Date(data.referenceMonday+'T12:00:00'):null;
  absenceData=data.absences||{};
@@ -126,6 +175,9 @@ function resetLocalState(){
  baseShift=0;REF=null;absenceData={};
  allowance.value=0;
  setup.classList.add('hidden');
+ pendingScreen.classList.add('hidden');
+ rejectedScreen.classList.add('hidden');
+ adminBtn.classList.add('hidden');
 }
 
 window.onUserReady=async(user)=>{currentUid=user.uid;await loadUserData()};

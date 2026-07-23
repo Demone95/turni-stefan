@@ -1,10 +1,11 @@
-import { auth, usernameToEmail } from "./firebase-config.js";
+import { auth, db, usernameToEmail } from "./firebase-config.js";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
   onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { doc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const authScreen = document.getElementById('authScreen');
 const appRoot = document.getElementById('appRoot');
@@ -57,7 +58,12 @@ authForm.addEventListener('submit', async (e) => {
   const email = usernameToEmail(username);
   try {
     if (mode === 'register') {
-      await createUserWithEmailAndPassword(auth, email, password);
+      const cred = await createUserWithEmailAndPassword(auth, email, password);
+      await setDoc(doc(db, 'users', cred.user.uid), {
+        username,
+        status: 'pending',
+        createdAt: new Date().toISOString()
+      });
     } else {
       await signInWithEmailAndPassword(auth, email, password);
     }
@@ -69,6 +75,8 @@ authForm.addEventListener('submit', async (e) => {
 });
 
 logoutBtn.addEventListener('click', () => signOut(auth));
+document.getElementById('logoutBtnPending').addEventListener('click', () => signOut(auth));
+document.getElementById('logoutBtnRejected').addEventListener('click', () => signOut(auth));
 
 // window.onUserReady viene definita in script.js: viene chiamata quando un
 // utente ha effettuato l'accesso, per caricare i suoi dati da Firestore.

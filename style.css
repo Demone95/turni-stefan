@@ -262,9 +262,17 @@ main>.card:first-of-type p:last-child{
 .auth-error{color:#ff8686;font-size:14px;min-height:18px;margin:10px 0 0}
 #authToggle{width:100%}
 
-/* Barra comandi con 3 elementi: cambia turno, esci, legenda */
-.top-controls{grid-template-columns:minmax(0,1fr) auto auto}
-.logout-btn{width:auto!important;padding:0 14px!important}
-@media(max-width:390px){
- .top-controls{grid-template-columns:minmax(0,1fr) auto auto}
-}
+/* Barra comandi con numero variabile di pulsanti (settings, esci, admin, legenda) */
+.top-controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center;position:relative;margin-bottom:16px}
+.top-controls>.settings{width:auto;height:48px;margin:0;padding:0 14px;white-space:nowrap;font-size:14px;flex:1 1 auto}
+.logout-btn{flex:0 0 auto!important}
+#adminBtn{flex:0 0 auto!important}
+
+/* Pannello richieste in attesa (admin) */
+.pending-list{display:grid;gap:10px;margin:18px 0;text-align:left}
+.pending-row{display:flex;align-items:center;gap:8px;background:#0d192b;border-radius:14px;padding:12px 14px}
+.pending-row span{flex:1;overflow-wrap:anywhere}
+.pending-row button{width:auto;margin:0;border:0;border-radius:11px;padding:9px 12px;color:#fff;font-size:13px;font-weight:700}
+.approve-btn{background:#23884f}
+.reject-btn{background:#bd424c}
+.empty-pending{color:#aebbd0;text-align:center}
