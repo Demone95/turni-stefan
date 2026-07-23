@@ -254,3 +254,17 @@ main>.card:first-of-type p:last-child{
     transform:scale(.98);
     background:#10213a!important;
 }
+
+/* Schermata di accesso / registrazione */
+.auth-form{display:grid;gap:12px;margin-top:20px}
+.auth-form input{text-align:center}
+.auth-submit{border:0;border-radius:16px;padding:15px;color:#fff;font-size:17px;font-weight:750;background:#2357bd;margin-top:2px}
+.auth-error{color:#ff8686;font-size:14px;min-height:18px;margin:10px 0 0}
+#authToggle{width:100%}
+
+/* Barra comandi con 3 elementi: cambia turno, esci, legenda */
+.top-controls{grid-template-columns:minmax(0,1fr) auto auto}
+.logout-btn{width:auto!important;padding:0 14px!important}
+@media(max-width:390px){
+ .top-controls{grid-template-columns:minmax(0,1fr) auto auto}
+}
