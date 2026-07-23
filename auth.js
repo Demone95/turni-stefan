@@ -13,6 +13,7 @@ const appRoot = document.getElementById('appRoot');
 const authForm = document.getElementById('authForm');
 const authUsername = document.getElementById('authUsername');
 const authPassword = document.getElementById('authPassword');
+const togglePassword = document.getElementById('togglePassword');
 const authTitle = document.getElementById('authTitle');
 const authSubmit = document.getElementById('authSubmit');
 const authToggle = document.getElementById('authToggle');
@@ -38,6 +39,13 @@ function setMode(newMode) {
 }
 
 authToggle.addEventListener('click', () => setMode(mode === 'login' ? 'register' : 'login'));
+
+togglePassword.addEventListener('click', () => {
+  const showing = authPassword.type === 'text';
+  authPassword.type = showing ? 'password' : 'text';
+  togglePassword.textContent = showing ? '👁️' : '🙈';
+  togglePassword.setAttribute('aria-label', showing ? 'Mostra password' : 'Nascondi password');
+});
 
 const ERROR_MESSAGES = {
   'auth/email-already-in-use': 'Questo nome utente è già in uso.',
@@ -75,9 +83,12 @@ authForm.addEventListener('submit', async (e) => {
   }
 });
 
-logoutBtn.addEventListener('click', () => signOut(auth));
-document.getElementById('logoutBtnPending').addEventListener('click', () => signOut(auth));
-document.getElementById('logoutBtnRejected').addEventListener('click', () => signOut(auth));
+function confirmLogout() {
+  if (confirm('Vuoi davvero uscire?')) signOut(auth);
+}
+logoutBtn.addEventListener('click', confirmLogout);
+document.getElementById('logoutBtnPending').addEventListener('click', confirmLogout);
+document.getElementById('logoutBtnRejected').addEventListener('click', confirmLogout);
 
 // window.onUserReady viene definita in script.js: viene chiamata quando un
 // utente ha effettuato l'accesso, per caricare i suoi dati da Firestore.
