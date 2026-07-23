@@ -8,6 +8,7 @@ import {
 import { doc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const authScreen = document.getElementById('authScreen');
+const loadingScreen = document.getElementById('loadingScreen');
 const appRoot = document.getElementById('appRoot');
 const authForm = document.getElementById('authForm');
 const authUsername = document.getElementById('authUsername');
@@ -81,6 +82,7 @@ document.getElementById('logoutBtnRejected').addEventListener('click', () => sig
 // window.onUserReady viene definita in script.js: viene chiamata quando un
 // utente ha effettuato l'accesso, per caricare i suoi dati da Firestore.
 onAuthStateChanged(auth, (user) => {
+  loadingScreen.classList.add('hidden');
   if (user) {
     authScreen.classList.add('hidden');
     appRoot.classList.remove('hidden');
