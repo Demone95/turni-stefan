@@ -1,5 +1,5 @@
 import { db } from "./firebase-config.js";
-import { doc, getDoc, setDoc, updateDoc, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { doc, getDoc, getDocFromCache, setDoc, updateDoc, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 // ⚠️ Sostituisci questo valore con il TUO uid Firebase (Authentication → Users → colonna "User UID").
 // Solo l'account con questo uid vedrà il pulsante "Richieste" e potrà approvare/rifiutare nuovi utenti.
@@ -164,14 +164,7 @@ async function openAdminPanel(){
  ]);
 }
 
-async function loadUserData(){
- dataReady=false;
- let data={};
- try{
-   const snap=await getDoc(userDocRef());
-   if(snap.exists())data=snap.data();
- }catch(err){console.error('Errore caricamento dati',err)}
-
+function applyUserData(data){
  adminCheck();
  const status=data.status||'pending';
  if(currentUid!==ADMIN_UID&&status==='pending'){setGate('pending');return}
@@ -187,6 +180,22 @@ async function loadUserData(){
  updateAbsenceStats();
  view=new Date();view.setDate(1);
  if(!baseShift||!REF)setup.classList.remove('hidden');else{setup.classList.add('hidden');show(new Date())}
+}
+
+async function loadUserData(){
+ dataReady=false;
+ try{
+   const cacheSnap=await getDocFromCache(userDocRef());
+   if(cacheSnap.exists())applyUserData(cacheSnap.data());
+ }catch(e){/* nessuna copia in cache, va bene: si aspetta il server */}
+ try{
+   const snap=await getDoc(userDocRef());
+   if(snap.exists())applyUserData(snap.data());
+   else if(!dataReady)applyUserData({});
+ }catch(err){
+   console.error('Errore caricamento dati',err);
+   if(!dataReady)applyUserData({});
+ }
 }
 
 function resetLocalState(){
