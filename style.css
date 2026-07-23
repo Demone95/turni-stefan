@@ -283,24 +283,3 @@ main>.card:first-of-type p:last-child{
 /* Schermata di caricamento iniziale */
 .loading-spinner{width:52px;height:52px;border-radius:50%;border:4px solid #273a5c;border-top-color:#4d8cff;animation:spin .8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
-
-/* v5.0 - rimuove spazio data, layout più alto, fix legenda */
-
-/* Header più compatto (niente data → meno spazio vuoto) */
-header{padding:6px 4px 12px!important}
-h1{font-size:32px!important;margin:0 0 10px!important}
-
-/* Padding superiore main ridotto */
-main{padding-top:calc(10px + env(safe-area-inset-top))!important}
-
-/* Legenda: la popover si apre verso il basso ma non copre i pulsanti;
-   stacca dal bordo destro con right:0 e scende dal summary */
-.top-legend{position:relative;z-index:100}
-.legend-popover{
-  position:absolute!important;
-  right:0!important;
-  top:calc(100% + 8px)!important;
-  left:auto!important;
-  width:min(290px,calc(100vw - 32px))!important;
-  z-index:200!important;
-}
