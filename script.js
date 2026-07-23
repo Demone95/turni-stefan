@@ -105,7 +105,15 @@ function syncTopControls(){
 }
 
 let now=new Date();document.getElementById('today').textContent=now.toLocaleDateString('it-IT',{weekday:'long',day:'numeric',month:'long'});
-if('serviceWorker'in navigator)navigator.serviceWorker.register('service-worker.js');
+if('serviceWorker'in navigator){
+ navigator.serviceWorker.register('service-worker.js');
+ let refreshing=false;
+ navigator.serviceWorker.addEventListener('controllerchange',()=>{
+   if(refreshing)return;
+   refreshing=true;
+   window.location.reload();
+ });
+}
 
 const pendingScreen=document.getElementById('pendingScreen'),rejectedScreen=document.getElementById('rejectedScreen'),mainEl=document.querySelector('main');
 const adminBtn=document.getElementById('adminBtn'),adminModal=document.getElementById('adminModal'),pendingList=document.getElementById('pendingList'),closeAdmin=document.getElementById('closeAdmin');
