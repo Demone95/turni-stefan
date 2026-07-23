@@ -1,6 +1,6 @@
 // Configurazione e inizializzazione Firebase, condivisa da tutta l'app.
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getAuth } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getAuth, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import { getFirestore } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -16,6 +16,11 @@ const firebaseConfig = {
 export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db = getFirestore(app);
+
+// Forza il salvataggio della sessione tramite localStorage (più affidabile
+// su Safari/iOS rispetto al metodo predefinito), così il login resta attivo
+// finché l'utente non fa esplicitamente logout.
+setPersistence(auth, browserLocalPersistence).catch((err) => console.error('Errore impostazione persistenza', err));
 
 // Firebase Authentication richiede un'email. Per permettere agli utenti di
 // accedere con un semplice "nome utente", trasformiamo il nome utente in
