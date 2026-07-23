@@ -104,7 +104,6 @@ function syncTopControls(){
  if(setupVisible&&legend)legend.removeAttribute('open');
 }
 
-let now=new Date();document.getElementById('today').textContent=now.toLocaleDateString('it-IT',{weekday:'long',day:'numeric',month:'long'});
 if('serviceWorker'in navigator){
  navigator.serviceWorker.register('service-worker.js');
  let refreshing=false;
