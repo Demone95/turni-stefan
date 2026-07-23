@@ -116,7 +116,7 @@ if('serviceWorker'in navigator){
 }
 
 const pendingScreen=document.getElementById('pendingScreen'),rejectedScreen=document.getElementById('rejectedScreen'),mainEl=document.querySelector('main');
-const adminBtn=document.getElementById('adminBtn'),adminModal=document.getElementById('adminModal'),pendingList=document.getElementById('pendingList'),closeAdmin=document.getElementById('closeAdmin');
+const adminBtn=document.getElementById('adminBtn'),adminModal=document.getElementById('adminModal'),pendingList=document.getElementById('pendingList'),rejectedList=document.getElementById('rejectedList'),closeAdmin=document.getElementById('closeAdmin');
 
 function setGate(kind){
  pendingScreen.classList.toggle('hidden',kind!=='pending');
@@ -131,26 +131,37 @@ function adminCheck(){
 adminBtn.onclick=()=>openAdminPanel();
 closeAdmin.addEventListener('click',()=>adminModal.classList.add('hidden'));
 
-async function openAdminPanel(){
- adminModal.classList.remove('hidden');
- pendingList.innerHTML='<p>Caricamento…</p>';
+async function loadStatusList(status,container,actions){
+ container.innerHTML='<p>Caricamento…</p>';
  try{
-   const q=query(collection(db,'users'),where('status','==','pending'));
+   const q=query(collection(db,'users'),where('status','==',status));
    const snap=await getDocs(q);
-   if(snap.empty){pendingList.innerHTML='<p class="empty-pending">Nessuna richiesta in sospeso.</p>';return}
-   pendingList.innerHTML='';
+   if(snap.empty){container.innerHTML=`<p class="empty-pending">${status==='pending'?'Nessuna richiesta in sospeso.':'Nessun account rifiutato.'}</p>`;return}
+   container.innerHTML='';
    snap.forEach(docSnap=>{
      const u=docSnap.data();
      const row=document.createElement('div');row.className='pending-row';
      const name=document.createElement('span');name.textContent=u.username||docSnap.id;
-     const approveBtn=document.createElement('button');approveBtn.textContent='✅ Approva';approveBtn.className='approve-btn';
-     const rejectBtn=document.createElement('button');rejectBtn.textContent='❌ Rifiuta';rejectBtn.className='reject-btn';
-     approveBtn.onclick=async()=>{await updateDoc(doc(db,'users',docSnap.id),{status:'approved'});openAdminPanel()};
-     rejectBtn.onclick=async()=>{await updateDoc(doc(db,'users',docSnap.id),{status:'rejected'});openAdminPanel()};
-     row.append(name,approveBtn,rejectBtn);
-     pendingList.append(row);
+     row.append(name);
+     actions.forEach(({label,className,newStatus})=>{
+       const btn=document.createElement('button');btn.textContent=label;btn.className=className;
+       btn.onclick=async()=>{await updateDoc(doc(db,'users',docSnap.id),{status:newStatus});openAdminPanel()};
+       row.append(btn);
+     });
+     container.append(row);
    });
- }catch(err){console.error('Errore caricamento richieste',err);pendingList.innerHTML='<p class="empty-pending">Errore nel caricamento.</p>'}
+ }catch(err){console.error('Errore caricamento utenti',err);container.innerHTML='<p class="empty-pending">Errore nel caricamento.</p>'}
+}
+
+async function openAdminPanel(){
+ adminModal.classList.remove('hidden');
+ loadStatusList('pending',pendingList,[
+   {label:'✅ Approva',className:'approve-btn',newStatus:'approved'},
+   {label:'❌ Rifiuta',className:'reject-btn',newStatus:'rejected'}
+ ]);
+ loadStatusList('rejected',rejectedList,[
+   {label:'✅ Approva',className:'approve-btn',newStatus:'approved'}
+ ]);
 }
 
 async function loadUserData(){
