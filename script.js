@@ -113,15 +113,7 @@ function syncTopControls(){
  if(setupVisible&&legend)legend.removeAttribute('open');
 }
 
-if('serviceWorker'in navigator){
- navigator.serviceWorker.register('service-worker.js');
- let refreshing=false;
- navigator.serviceWorker.addEventListener('controllerchange',()=>{
-   if(refreshing)return;
-   refreshing=true;
-   window.location.reload();
- });
-}
+if('serviceWorker'in navigator)navigator.serviceWorker.register('service-worker.js');
 
 const pendingScreen=document.getElementById('pendingScreen'),rejectedScreen=document.getElementById('rejectedScreen'),mainEl=document.querySelector('main');
 const adminBtn=document.getElementById('adminBtn'),adminModal=document.getElementById('adminModal'),pendingList=document.getElementById('pendingList'),rejectedList=document.getElementById('rejectedList'),closeAdmin=document.getElementById('closeAdmin');
