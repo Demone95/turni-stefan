@@ -15,7 +15,7 @@ async function saveUserData(){
  const statusEl=document.getElementById('saveStatus');
  if(statusEl){statusEl.textContent='Salvataggio…';statusEl.classList.remove('hidden','save-error');}
  try{
-   await setDoc(userDocRef(),{baseShift,referenceMonday:REF?iso(REF):null,shiftAllowance:Number(allowance.value)||0,absences:absenceData},{merge:true});
+   await updateDoc(userDocRef(),{baseShift,referenceMonday:REF?iso(REF):null,shiftAllowance:Number(allowance.value)||0,absences:absenceData});
    if(statusEl){
      statusEl.textContent='Salvato ✓';
      setTimeout(()=>statusEl.classList.add('hidden'),1200);
